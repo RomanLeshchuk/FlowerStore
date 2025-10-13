@@ -139,7 +139,10 @@ public class FlowerStoreTest {
         Assertions.assertFalse(results.isEmpty());
 
         double topScore = results.get(0).getSearchScore(tulipSearch);
-        double secondScore = results.size() > 1 ? results.get(1).getSearchScore(tulipSearch) : 0.0;
+        double secondScore = 0.0;
+        if (results.size() > 1) {
+            secondScore = results.get(1).getSearchScore(tulipSearch);
+        }
 
         Assertions.assertTrue(topScore >= secondScore, "Bucket with exact tulip match must rank first");
         Assertions.assertEquals(bucket1, results.get(0), 
