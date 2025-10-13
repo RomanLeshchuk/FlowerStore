@@ -9,14 +9,15 @@ public class FlowerSpecComparator {
     public double getRelevanceScore(FlowerSpec flowerSpec, FlowerSpec searchSpec) {
         double score = 0.0;
 
+        if (flowerSpec.getFlowerType() == searchSpec.getFlowerType()) {
+            score += TYPE_WEIGHT;
+        }
+
+        if (flowerSpec.getColor() == searchSpec.getColor()) {
+            score += COLOR_WEIGHT;
+        }
+
         double lengthDiff = Math.abs(flowerSpec.getSepalLength() - searchSpec.getSepalLength());
-
-        double typeScore = flowerSpec.getFlowerType() == searchSpec.getFlowerType() ? 1.0 : 0.0;
-        score += typeScore * TYPE_WEIGHT;
-
-        double colorScore = flowerSpec.getColor() == searchSpec.getColor() ? 1.0 : 0.0;
-        score += colorScore * COLOR_WEIGHT;
-
         double lengthScore = 1.0 - Math.min(lengthDiff / SEPAL_LENGTH_LINEAR_DIFF, 1.0);
         score += lengthScore * SEPAL_LENGTH_WEIGHT;
 
